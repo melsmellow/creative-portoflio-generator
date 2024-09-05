@@ -4,11 +4,11 @@ import axios from "axios";
 
 export async function uploadFile(file: File) {
   const s3 = new S3Client({
-    endpoint: "https://s3.us-east-005.backblazeb2.com/melsmellow", // Your Backblaze B2 S3-compatible endpoint
+    endpoint: "https://s3.us-east-005.backblazeb2.com/test123411", // Your Backblaze B2 S3-compatible endpoint
     region: "us-east-005", // Your Backblaze B2 region
     credentials: {
-      accessKeyId: "00503f44c8bf2aa0000000002",
-      secretAccessKey: "K005IZx9MlwLqAT4R6UIuu/tzPrP6ko",
+      accessKeyId: "00503f44c8bf2aa0000000003",
+      secretAccessKey: "K005Q6Owx23tXMFWdLlWpWUbHKFMcFU",
     },
   });
   console.log(s3);
@@ -17,7 +17,7 @@ export async function uploadFile(file: File) {
   try {
     const expiresIn = 7 * 24 * 60 * 60; // 3600
     const command = new PutObjectCommand({
-      Bucket: "melsmellow",
+      Bucket: "test123411",
       Key: file.name,
     });
     const signedUrl = await getSignedUrl(s3, command, { expiresIn });
