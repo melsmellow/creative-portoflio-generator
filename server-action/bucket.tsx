@@ -4,7 +4,7 @@ import axios from "axios";
 
 export async function uploadFile(file: File) {
   const s3 = new S3Client({
-    endpoint: "https://s3.us-east-005.backblazeb2.com/", // Your Backblaze B2 S3-compatible endpoint
+    endpoint: "https://s3.us-east-005.backblazeb2.com/melsmellow", // Your Backblaze B2 S3-compatible endpoint
     region: "us-east-005", // Your Backblaze B2 region
     credentials: {
       accessKeyId: "00503f44c8bf2aa0000000002",
