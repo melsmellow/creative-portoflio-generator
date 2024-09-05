@@ -4,11 +4,11 @@ import axios from "axios";
 
 export async function uploadFile(file: File) {
   const s3 = new S3Client({
-    endpoint: process.env.BUCKET_ENDPOINT, 
-    region: "us-east-005", 
+    endpoint: process.env.BUCKET_ENDPOINT,
+    region: "us-east-005",
     credentials: {
-      accessKeyId: process.env.BUCKET_KEY_ID!,
-      secretAccessKey: process.env.B2_APPLICATION_KEY!,
+      accessKeyId: process.env.B2_APPLICATION_KEY!,
+      secretAccessKey: process.env.BUCKET_KEY_ID!,
     },
   });
   console.log(s3);
