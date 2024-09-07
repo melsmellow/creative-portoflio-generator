@@ -1,5 +1,6 @@
 "use client";
-import { uploadFile } from "@/server-action/bucket";
+import { getAuthorizationToken } from "@/server-action/bucket";
+// import { uploadFile } from "@/server-action/bucket";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -9,14 +10,51 @@ function HomePage({}: Props) {
   const [file, setFiles] = useState<File[]>([]);
   const [fileUrl, setFilesUrl] = useState<string[]>([]);
 
+  const uploadToAPI = async (file: File) => {
+    const formData = new FormData();
+    const auth = await fetch("/api/file/auth", {
+      method: "POST",
+    });
+
+    const data = await auth.json();
+    console.log("AUTH", data);
+    const { token, apiUrl } = data;
+
+    const list = await fetch("/api/file/list", {
+      method: "POST",
+      body: JSON.stringify({ token, apiUrl }),
+    });
+
+    console.log(list);
+
+    formData.append("file", file); // The actual file
+    formData.append("name", file.name); // Pass the file name separately
+
+    try {
+      const response = await fetch("/api/file/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload file");
+      }
+
+      const result = await response.json();
+      console.log("File uploaded successfully:", result);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
   const handleFileUpload = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     console.log("uploading");
     file.forEach(async (f) => {
-      const result = await uploadFile(f);
-      console.log(result);
+      uploadToAPI(f);
+      // console.log(result);
     });
   };
 
